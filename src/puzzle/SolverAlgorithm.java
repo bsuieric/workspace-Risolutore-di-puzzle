@@ -1,5 +1,5 @@
 package puzzle;
 
 public interface SolverAlgorithm {
-	public void solve();
+	public void solve(Puzzle puzzle);
 }

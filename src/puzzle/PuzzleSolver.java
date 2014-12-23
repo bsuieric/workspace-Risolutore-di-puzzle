@@ -9,10 +9,10 @@ public class PuzzleSolver {
 		// TODO Auto-generated method stub
 		//String inputPath = args[0];
 	    //String outputPath = args[1];
-		//Puzzle puzzle=new Puzzle("YO2.txt");
-		SolvedPuzzle unsolved=new SolvedPuzzle("sofia.txt");
-		unsolved.solve();
+		Puzzle puzzle=new Puzzle("YO2.txt");
+		SolvedPuzzle unsolved=new SolvedPuzzle(puzzle);
+		unsolved.solve(puzzle);
 		IOWriter writer=new IOWriter();
-		writer.print(unsolved,"output-file.txt");
+		writer.print(unsolved, puzzle, "output-file.txt");
 	}
 }

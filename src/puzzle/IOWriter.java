@@ -17,23 +17,23 @@ public class IOWriter {
 		  	}
 	  }
 	  
-	  public void print(SolvedPuzzle sp, String file){
+	  public void print(SolvedPuzzle sp,Puzzle p, String file){
 		  StringBuilder content=new StringBuilder();
 		  for(int i=0;i<sp.getTileCopiedList().size();++i){
 			  content.append(sp.getTileCopiedList().get(i).get_carattere());
 		  }
 		  content.append(System.getProperty("line.separator"));
-		  for(int i=0; i<sp.getPuzzle().getRows(); ++i){
+		  for(int i=0; i<p.getRows(); ++i){
 			  content.append(System.getProperty("line.separator"));
-			  for(int j=0; j<sp.getPuzzle().getCols(); ++j){
-				  content.append(sp.getPuzzle().getTile(i, j).get_carattere());
+			  for(int j=0; j<p.getCols(); ++j){
+				  content.append(p.getTile(i, j).get_carattere());
 			  }
 		  }
 		  content.append(System.getProperty("line.separator"));
 		  content.append(System.getProperty("line.separator"));
-		  content.append(sp.getPuzzle().getRows());
+		  content.append(p.getRows());
 		  content.append("x");
-		  content.append(sp.getPuzzle().getCols());
+		  content.append(p.getCols());
 		  
 		  writeContent(content.toString(), file);
 	  }
