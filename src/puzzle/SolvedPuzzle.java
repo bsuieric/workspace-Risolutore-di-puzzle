@@ -1,70 +1,78 @@
 package puzzle;
-import java.lang.Thread;
 import java.util.ArrayList;
 
-public class SolvedPuzzle extends Thread implements SolverAlgorithm {
-	private Puzzle puzzle=new Puzzle();
+public class SolvedPuzzle implements SolverAlgorithm {
 	private ArrayList<Tile> copiedPuzzle=new ArrayList<Tile>();
-	private int count=0;
+	private Puzzle puzzle;
 	
-	public SolvedPuzzle(Puzzle p){
-		copyArrayList(p);
+	public SolvedPuzzle(String path){
+		puzzle=new Puzzle(path);
+		copyArrayList();
 	}
 	
-	public void solve(Puzzle p){
-		solveFirstCol(copiedPuzzle, p);
-		solveRemainingTile(copiedPuzzle, p);
-	}
-	
-	private void copyArrayList(Puzzle p){
-		for(int i=0;i<p.getTileList().size();++i){
-			copiedPuzzle.add(p.getTileList().get(i));
+	public class RemainingPuzzle extends Thread{
+		int count;
+		public RemainingPuzzle(int n){
+			count=n;
+		}
+		public void run(){
+			for(int j=1; j<puzzle.getCols(); ++j){
+				boolean present=false;
+				for(int z=0; z<copiedPuzzle.size() && !present; ++z){
+					if(copiedPuzzle.get(z).get_id_ovest().equals(puzzle.getTile(count, j-1).get_id_pezzo())){
+						puzzle.setTile(count, j, copiedPuzzle.get(z));
+						present=true;
+					}
+				}
+			}
+			
 		}
 	}
 	
-	private void solveFirstCol(ArrayList<Tile> a, Puzzle p){
+	public void solve(){
+		solveFirstCol();
+//		solveRemainingTile();
+	}
+	
+	private void copyArrayList(){
+		for(int i=0;i<puzzle.getTileList().size();++i){
+			copiedPuzzle.add(puzzle.getTileList().get(i));
+		}
+	}
+	
+	private void solveFirstCol(){
 		String aux="VUOTO";
-		for(int i=0; i<p.getRows();++i){
+		for(int i=0; i<puzzle.getRows();++i){
 			boolean ok=true;
-			for(int z=0; z< a.size() && ok ; ++z){
-				if(a.get(z).get_id_nord().equals(aux) && a.get(z).get_id_ovest().equals("VUOTO")){
-						p.setTile(i, 0, a.get(z));
-						aux=a.get(z).get_id_pezzo();
+			for(int z=0; z< copiedPuzzle.size() && ok ; ++z){
+				if(copiedPuzzle.get(z).get_id_nord().equals(aux) && copiedPuzzle.get(z).get_id_ovest().equals("VUOTO")){
+						puzzle.setTile(i, 0, copiedPuzzle.get(z));
+						aux=copiedPuzzle.get(z).get_id_pezzo();
 						ok= false;
 				}
 			}
 		}
 	}
 	
-	private void solveRemainingTile(ArrayList<Tile> a, Puzzle p){
-		for(int i=0;i<p.getRows(); ++i){
-			for(int j=1; j<p.getCols(); ++j){
-				boolean present=false;
-				for(int z=0; z<a.size() && !present; ++z){
-					if(a.get(z).get_id_ovest().equals(p.getTile(i, j-1).get_id_pezzo())){
-						p.setTile(i, j, a.get(z));
-						present=true;
-					}
-				}
-			}
-		}
-	}
-	
-	public void run(){
-		for(int i=0;i<p.getRows(); ++i){
-			for(int j=1; j<p.getCols(); ++j){
-				boolean present=false;
-				for(int z=0; z<a.size() && !present; ++z){
-					if(a.get(z).get_id_ovest().equals(p.getTile(i, j-1).get_id_pezzo())){
-						p.setTile(i, j, a.get(z));
-						present=true;
-					}
-				}
-			}
-		}
-	}
+//	private void solveRemainingTile(){
+//		for(int i=0;i<puzzle.getRows(); ++i){
+//			for(int j=1; j<puzzle.getCols(); ++j){
+//				boolean present=false;
+//				for(int z=0; z<copiedPuzzle.size() && !present; ++z){
+//					if(copiedPuzzle.get(z).get_id_ovest().equals(puzzle.getTile(i, j-1).get_id_pezzo())){
+//						puzzle.setTile(i, j, copiedPuzzle.get(z));
+//						present=true;
+//					}
+//				}
+//			}
+//		}
+//	}
 	
 	public ArrayList<Tile> getTileCopiedList(){
 		return copiedPuzzle;
+	}
+	
+	public Puzzle getPuzzle(){
+		return puzzle;
 	}
 }

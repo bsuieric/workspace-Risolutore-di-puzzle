@@ -1,6 +1,4 @@
 package puzzle;
-
-import puzzle.Puzzle;
 import puzzle.SolvedPuzzle;
 import puzzle.IOWriter;
 
@@ -9,10 +7,13 @@ public class PuzzleSolver {
 		// TODO Auto-generated method stub
 		//String inputPath = args[0];
 	    //String outputPath = args[1];
-		Puzzle puzzle=new Puzzle("YO2.txt");
-		SolvedPuzzle unsolved=new SolvedPuzzle(puzzle);
-		unsolved.solve(puzzle);
+//		Puzzle puzzle=new Puzzle("inputWWW.txt");
+		SolvedPuzzle unsolved=new SolvedPuzzle("inputWWW.txt");
+		unsolved.solve();
+		for(int i=0;i<unsolved.getPuzzle().getRows();++i){
+			unsolved.new RemainingPuzzle(i).start();
+		}
 		IOWriter writer=new IOWriter();
-		writer.print(unsolved, puzzle, "output-file.txt");
+		writer.print(unsolved, unsolved.getPuzzle() , "output-file.txt");
 	}
 }
