@@ -17,7 +17,7 @@ public class IOWriter {
 		  	}
 	  }
 	  
-	  public void print(SolvedPuzzle sp,Puzzle p, String file){
+	  public void print(PuzzleToSolve sp,Puzzle p, String file){
 		  StringBuilder content=new StringBuilder();
 		  for(int i=0;i<sp.getTileCopiedList().size();++i){
 			  content.append(sp.getTileCopiedList().get(i).get_carattere());

@@ -1,11 +1,11 @@
 package puzzle;
 import java.util.ArrayList;
 
-public class SolvedPuzzle implements SolverAlgorithm {
+public class PuzzleToSolve implements SolverAlgorithm {
 	private ArrayList<Tile> copiedPuzzle=new ArrayList<Tile>();
 	private Puzzle puzzle;
 	
-	public SolvedPuzzle(String path){
+	public PuzzleToSolve(String path){
 		puzzle=new Puzzle(path);
 		copyArrayList();
 	}
@@ -31,7 +31,9 @@ public class SolvedPuzzle implements SolverAlgorithm {
 	
 	public void solve(){
 		solveFirstCol();
-//		solveRemainingTile();
+		for(int i=0;i<this.getPuzzle().getRows();++i){
+			this.new RemainingPuzzle(i).start();
+		}
 	}
 	
 	private void copyArrayList(){
@@ -53,20 +55,6 @@ public class SolvedPuzzle implements SolverAlgorithm {
 			}
 		}
 	}
-	
-//	private void solveRemainingTile(){
-//		for(int i=0;i<puzzle.getRows(); ++i){
-//			for(int j=1; j<puzzle.getCols(); ++j){
-//				boolean present=false;
-//				for(int z=0; z<copiedPuzzle.size() && !present; ++z){
-//					if(copiedPuzzle.get(z).get_id_ovest().equals(puzzle.getTile(i, j-1).get_id_pezzo())){
-//						puzzle.setTile(i, j, copiedPuzzle.get(z));
-//						present=true;
-//					}
-//				}
-//			}
-//		}
-//	}
 	
 	public ArrayList<Tile> getTileCopiedList(){
 		return copiedPuzzle;
